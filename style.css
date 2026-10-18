@@ -1,0 +1,645 @@
+/* =====================================================
+   style.css - styles for Jyotiraditya Mishra's web page
+   Linked from index.html with:
+   <link rel="stylesheet" href="style.css">
+   ===================================================== */
+
+
+/* ---------- Colour palette & base settings ---------- */
+
+/* Colour "variables" used everywhere on the page.
+   Change a colour here and it changes on the whole site. */
+:root {
+    --bg: #0b0b10;                              /* page background (near black) */
+    --bg-soft: #14141c;                         /* slightly lighter background (footer) */
+    --card: rgba(255, 255, 255, 0.04);          /* see-through card background */
+    --card-border: rgba(255, 255, 255, 0.08);   /* faint card border */
+    --text: #ecebf2;                            /* main text colour */
+    --muted: #a3a1b3;                           /* softer grey text */
+    --gold: #d4af37;                            /* main gold accent */
+    --gold-light: #f3d77a;                      /* lighter gold */
+    --radius: 18px;                             /* how rounded the card corners are */
+    --shadow: 0 20px 50px rgba(0, 0, 0, 0.45);  /* soft shadow under cards */
+}
+
+/* Reset: remove the browser's default spacing and make
+   widths include padding and borders (easier layouts). */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Scroll smoothly when a menu link is clicked */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Whole page: font, dark background with a gold glow (top left)
+   and a purple glow (bottom right) */
+body {
+    font-family: "Inter", system-ui, sans-serif;
+    background-color: var(--bg);
+    background-image:
+        radial-gradient(circle at 15% 10%, rgba(212, 175, 55, 0.12), transparent 40%),
+        radial-gradient(circle at 85% 80%, rgba(120, 80, 220, 0.12), transparent 45%);
+    background-attachment: fixed;   /* glows stay still while scrolling */
+    color: var(--text);
+    line-height: 1.75;              /* space between lines of text */
+    min-height: 100vh;              /* page is at least one screen tall */
+}
+
+/* Colour of text when you highlight it with the mouse */
+::selection {
+    background: var(--gold);
+    color: var(--bg);
+}
+
+
+/* ---------- Navigation bar ---------- */
+
+/* Top menu bar that sticks to the top while scrolling,
+   with a blurred see-through background */
+nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;                    /* keeps it above everything else */
+    display: flex;
+    justify-content: space-between; /* logo on the left, links on the right */
+    align-items: center;
+    padding: 16px 6vw;
+    background: rgba(11, 11, 16, 0.75);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--card-border);
+}
+
+/* "J. Mishra" logo text */
+.logo {
+    font-family: "Playfair Display", serif;
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--gold);
+    text-decoration: none;
+    letter-spacing: 1px;
+}
+
+/* List of menu links placed in a row, without bullet points */
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 28px;
+}
+
+/* Each menu link */
+nav a.link {
+    color: var(--muted);
+    text-decoration: none;
+    font-weight: 500;
+    position: relative;
+    transition: color 0.3s;
+}
+
+/* Gold underline under each link, hidden at first (width 0) */
+nav a.link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0;
+    height: 2px;
+    background: var(--gold);
+    transition: width 0.3s;
+}
+
+/* On hover: link text gets brighter... */
+nav a.link:hover {
+    color: var(--text);
+}
+
+/* ...and the gold underline grows to full width */
+nav a.link:hover::after {
+    width: 100%;
+}
+
+
+/* ---------- Hero section (top of the page) ---------- */
+
+/* Two columns: text on the left, photo on the right */
+.hero {
+    max-width: 1100px;
+    margin: 0 auto;                     /* centre on the page */
+    padding: 90px 6vw 60px;
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;   /* text column a bit wider than photo */
+    gap: 60px;
+    align-items: center;
+}
+
+/* "Classical Musician" pill-shaped label */
+.tag {
+    display: inline-block;
+    padding: 6px 16px;
+    border: 1px solid var(--gold);
+    border-radius: 999px;               /* fully rounded ends */
+    color: var(--gold-light);
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 22px;
+}
+
+/* Main heading; clamp() makes it shrink on small screens */
+h1 {
+    font-family: "Playfair Display", serif;
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    line-height: 1.15;
+    margin-bottom: 22px;
+}
+
+/* The name inside the heading: gold gradient text that shimmers */
+h1 span {
+    background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+    background-size: 200% auto;
+    -webkit-background-clip: text;      /* show the gradient only inside the letters */
+    background-clip: text;
+    color: transparent;
+    animation: shine 4s linear infinite;
+}
+
+/* Short intro paragraph under the heading */
+.intro {
+    color: var(--muted);
+    font-size: 1.08rem;
+    margin-bottom: 32px;
+}
+
+/* Gold "Read his story" button */
+.btn {
+    display: inline-block;
+    padding: 14px 32px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: var(--bg);
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3);
+    transition: transform 0.25s, box-shadow 0.25s;
+}
+
+/* Button lifts up and glows more on hover */
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 35px rgba(212, 175, 55, 0.45);
+}
+
+/* Box around the main photo; gently floats up and down */
+.photo-frame {
+    position: relative;
+    justify-self: center;
+    animation: float 6s ease-in-out infinite;
+}
+
+/* Gold-to-purple glowing border behind the photo */
+.photo-frame::before {
+    content: "";
+    position: absolute;
+    inset: -12px;                       /* 12px bigger than the photo on every side */
+    border-radius: 28px;
+    background: linear-gradient(135deg, var(--gold), transparent 60%, #7850dc);
+    z-index: -1;                        /* sits behind the photo */
+    filter: blur(2px);
+    opacity: 0.8;
+}
+
+/* The main photo: rounded corners, cropped to a 4:5 shape */
+.photo-frame img {
+    display: block;
+    width: 100%;
+    max-width: 340px;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;                  /* crop instead of stretching */
+    border-radius: 22px;
+    box-shadow: var(--shadow);
+}
+
+
+/* ---------- Stats row (5+ years, Classical, School) ---------- */
+
+/* Three equal boxes side by side */
+.stats {
+    max-width: 1100px;
+    margin: 0 auto 70px;
+    padding: 0 6vw;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+/* Each stat box */
+.stat {
+    text-align: center;
+    padding: 28px 16px;
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius);
+}
+
+/* Big gold number / word in each box */
+.stat strong {
+    display: block;
+    font-family: "Playfair Display", serif;
+    font-size: 2.2rem;
+    color: var(--gold);
+}
+
+/* Small grey label under it */
+.stat span {
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+
+
+/* ---------- Content cards (About, Journey, Tutors...) ---------- */
+
+/* Main content area: centred column with space between cards */
+main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 6vw 80px;
+    display: grid;
+    gap: 28px;
+}
+
+/* A card: see-through box with rounded corners and shadow
+   that fades in from below when the page loads */
+.card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius);
+    padding: 40px;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s, border-color 0.3s;
+    animation: fadeUp 0.8s ease both;
+}
+
+/* Second card fades in slightly later than the first */
+.card:nth-child(2) {
+    animation-delay: 0.15s;
+}
+
+/* Card lifts and gets a gold border on hover */
+.card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(212, 175, 55, 0.4);
+}
+
+/* Card headings */
+.card h2 {
+    font-family: "Playfair Display", serif;
+    font-size: 1.8rem;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Gold music note before every card heading */
+.card h2::before {
+    content: "♪";
+    color: var(--gold);
+}
+
+/* Paragraphs inside cards */
+.card p {
+    color: #cfcde0;
+    margin-bottom: 14px;
+}
+
+/* No extra space after the last paragraph in a card */
+.card p:last-child {
+    margin-bottom: 0;
+}
+
+/* Highlighted quote with a gold bar on the left */
+blockquote {
+    margin-top: 22px;
+    padding: 18px 24px;
+    border-left: 4px solid var(--gold);
+    background: rgba(212, 175, 55, 0.07);
+    border-radius: 0 12px 12px 0;
+    font-family: "Playfair Display", serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--gold-light);
+}
+
+
+/* ---------- Footer ---------- */
+
+/* Bottom strip with the copyright line */
+footer {
+    text-align: center;
+    padding: 30px 6vw;
+    border-top: 1px solid var(--card-border);
+    color: var(--muted);
+    font-size: 0.9rem;
+    background: var(--bg-soft);
+}
+
+/* Name in the footer shown in gold */
+footer strong {
+    color: var(--gold);
+}
+
+
+/* ---------- Animations ---------- */
+
+/* Moves the gold gradient across the name (shimmer effect) */
+@keyframes shine {
+    to {
+        background-position: 200% center;
+    }
+}
+
+/* Moves the photo up 12px and back down (floating effect) */
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-12px);
+    }
+}
+
+/* Fades a card in while sliding it up 30px */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Turns off all animations for visitors whose device
+   is set to "reduce motion" */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+
+/* ---------- Mobile layout ---------- */
+
+/* Tablets and small laptops (800px wide or less) */
+@media (max-width: 800px) {
+
+    /* Stack text and photo in one column, centred */
+    .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding-top: 50px;
+        gap: 40px;
+    }
+
+    /* Show the photo above the text */
+    .photo-frame {
+        order: -1;
+    }
+
+    /* Smaller photo */
+    .photo-frame img {
+        max-width: 260px;
+    }
+
+    /* Menu links closer together */
+    nav ul {
+        gap: 18px;
+    }
+}
+
+/* Phones (520px wide or less) */
+@media (max-width: 520px) {
+
+    /* Less padding in the menu bar */
+    nav {
+        padding: 14px 16px;
+    }
+
+    /* Hide the menu links (not enough room) */
+    nav ul {
+        display: none;
+    }
+
+    /* Stat boxes stacked one under another */
+    .stats {
+        grid-template-columns: 1fr;
+        padding: 0 16px;
+    }
+
+    /* Less padding inside cards */
+    .card {
+        padding: 26px 20px;
+    }
+
+    /* 16px gap at the screen edges */
+    main,
+    .hero {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}
+
+
+/* ---------- Tutor section ---------- */
+
+/* Centred section headings like "Jyotiraditya Mishra's Tutors" */
+.section-title {
+    text-align: center;
+    font-family: "Playfair Display", serif;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    margin-top: 30px;
+}
+
+/* Gold word inside the section heading */
+.section-title span {
+    color: var(--gold);
+}
+
+/* Tutor card: photo column (220px) next to the text */
+.tutor {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 36px;
+    align-items: start;
+}
+
+/* Tutor photo: tall 3:4 shape with a gold border and glow */
+.tutor-photo img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    border-radius: 14px;
+    border: 3px solid var(--gold);
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.25);
+}
+
+/* Small name caption under the tutor photo */
+.tutor-photo figcaption {
+    text-align: center;
+    margin-top: 10px;
+    color: var(--muted);
+    font-size: 0.85rem;
+}
+
+/* Less space under the tutor's name */
+.tutor h2 {
+    margin-bottom: 6px;
+}
+
+/* "Sitar Guru" / "Vocal Guru" line in light gold */
+.tutor .role {
+    color: var(--gold-light);
+    font-weight: 500;
+    margin-bottom: 16px;
+}
+
+/* Gold "Padma Shri" award badge */
+.award {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    margin-bottom: 18px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.05));
+    border: 1px solid var(--gold);
+    color: var(--gold-light);
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+/* On small screens: photo above the text, centred */
+@media (max-width: 700px) {
+    .tutor {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .tutor-photo {
+        max-width: 220px;
+        margin: 0 auto;
+    }
+
+    /* Keep paragraphs left-aligned so they're easy to read */
+    .tutor .card-text {
+        text-align: left;
+    }
+}
+
+
+/* ---------- Performances table ---------- */
+
+/* Card holding the table; scrolls sideways on narrow phones */
+.table-card {
+    padding: 0;
+    overflow-x: auto;
+}
+
+/* The table fills the card; never squashed below 460px */
+.video-table {
+    width: 100%;
+    border-collapse: collapse;      /* no double borders between cells */
+    min-width: 460px;
+}
+
+/* Space inside every cell */
+.video-table th,
+.video-table td {
+    padding: 16px 22px;
+    text-align: left;
+}
+
+/* Gold-tinted header row */
+.video-table thead {
+    background: rgba(212, 175, 55, 0.12);
+}
+
+/* Header text: small, gold, capital letters */
+.video-table th {
+    color: var(--gold-light);
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+/* Thin line between rows */
+.video-table tbody tr {
+    border-top: 1px solid var(--card-border);
+    transition: background 0.25s;
+}
+
+/* Row lights up slightly on hover */
+.video-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+/* Row numbers (#) in gold */
+.video-table td:first-child {
+    color: var(--gold);
+    font-family: "Playfair Display", serif;
+    font-size: 1.2rem;
+}
+
+/* Small pill label for the platform name */
+.platform {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #fff;
+}
+
+/* YouTube label in YouTube red */
+.platform.youtube {
+    background: #e62117;
+}
+
+/* Instagram label in Instagram's orange-pink-purple gradient */
+.platform.instagram {
+    background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af);
+}
+
+/* "Watch ▶" button with a gold outline */
+.watch {
+    color: var(--gold-light);
+    font-weight: 600;
+    text-decoration: none;
+    padding: 6px 14px;
+    border: 1px solid var(--gold);
+    border-radius: 999px;
+    white-space: nowrap;            /* keep "Watch ▶" on one line */
+    transition: background 0.25s, color 0.25s;
+}
+
+/* Button fills with gold on hover */
+.watch:hover {
+    background: var(--gold);
+    color: var(--bg);
+}
